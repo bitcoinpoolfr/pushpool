@@ -237,11 +237,7 @@ static json_t *get_work(const char *auth_user)
 	const char *data_str;
 	json_t *val, *result;
 
-	sprintf(s, "{\"method\": \"getwork\", \"params\": [], \"id\":%u}\r\n",
-		rpcid++);
-
-	/* issue JSON-RPC request */
-	val = json_rpc_call(srv.curl, srv.rpc_url, srv.rpc_userpass, s);
+	val = next_getwork();
 	if (!val)
 		return NULL;
 

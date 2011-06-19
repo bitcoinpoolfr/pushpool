@@ -1177,6 +1177,7 @@ static int main_loop(void)
 		}
 		if (initiate_lp_flush) {
 			initiate_lp_flush = false;
+			getwork_flush();
 			flush_lp_waiters();
 		}
 	}
@@ -1279,6 +1280,11 @@ int main (int argc, char *argv[])
 	srv.workers = htab_str_new(false, true);
 	if (!srv.workers) {
 		applog(LOG_ERR, "htab init failed");
+		goto err_out;
+	}
+
+	if (!getwork_init()) {
+		applog(LOG_ERR, "Failed to initialize getwork thread.");
 		goto err_out;
 	}
 

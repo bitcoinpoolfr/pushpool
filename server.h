@@ -238,4 +238,10 @@ extern struct server_db_ops mysql_db_ops;
 extern struct server_db_ops postgresql_db_ops;
 #endif
 
+/* getwork.c */
+extern bool getwork_init();
+extern void getwork_finish();
+extern json_t *next_getwork();
+extern void getwork_flush();
+
 #endif /* __SERVER_H__ */
