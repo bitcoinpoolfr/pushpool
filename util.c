@@ -55,7 +55,8 @@ void applog(int prio, const char *fmt, ...)
 			 tm.tm_hour,
 			 tm.tm_min, tm.tm_sec + tv.tv_usec / 1000000.0,
 			 fmt)<0)
-			vfprintf(stderr, f, ap); /* atomic write to stderr */
+			return;
+		vfprintf(stderr, f, ap); /* atomic write to stderr */
 		free(f);
 	}
 	va_end(ap);
