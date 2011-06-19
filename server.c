@@ -639,17 +639,16 @@ static void reqlog(const char *rem_host, const char *username,
 	gettimeofday(&tv, NULL);
 	gmtime_r(&tv.tv_sec, &tm);
 
-	if (asprintf(&f, "[%d-%02d-%02d %02d:%02d:%02d.%llu] %s %s \"%s\"\n",
-		tm.tm_year + 1900,
-		tm.tm_mon + 1,
-		tm.tm_mday,
-		tm.tm_hour,
-		tm.tm_min,
-		tm.tm_sec,
-		(unsigned long long) tv.tv_usec,
-	        (rem_host && *rem_host) ? rem_host : "-",
-	        (username && *username) ? username : "-",
-	        (uri && *uri) ? uri : "") < 0)
+	if (asprintf(&f, "[%d-%02d-%02d %02d:%02d:%02.6f] %s %s \"%s\"\n",
+		     tm.tm_year + 1900,
+		     tm.tm_mon + 1,
+		     tm.tm_mday,
+		     tm.tm_hour,
+		     tm.tm_min,
+		     tm.tm_sec + +tv.tv_usec / 1000000.0,
+		     (rem_host && *rem_host) ? rem_host : "-",
+		     (username && *username) ? username : "-",
+		     (uri && *uri) ? uri : "") < 0)
 		return;
 
 	wrc = write(srv.req_fd, f, strlen(f));

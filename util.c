@@ -49,14 +49,11 @@ void applog(int prio, const char *fmt, ...)
 		gmtime_r(&tv.tv_sec, &tm);
 
 		if (asprintf(&f, "[%d-%02d-%02d %02d:%02d:%02.6f] %s\n",
-			 tm.tm_year + 1900,
-			 tm.tm_mon + 1,
-			 tm.tm_mday,
-			 tm.tm_hour,
-			 tm.tm_min, tm.tm_sec + tv.tv_usec / 1000000.0,
-			 fmt)<0)
+			     tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
+			     tm.tm_hour, tm.tm_min,
+			     tm.tm_sec + tv.tv_usec / 1000000.0, fmt) < 0)
 			return;
-		vfprintf(stderr, f, ap); /* atomic write to stderr */
+		vfprintf(stderr, f, ap);	/* atomic write to stderr */
 		free(f);
 	}
 	va_end(ap);
