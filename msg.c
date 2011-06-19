@@ -33,7 +33,7 @@
 #include "server.h"
 
 struct worker {
-	char			username[64 + 1];
+	char			username[MAX_USERNAME];
 
 	struct elist_head	log;
 };
@@ -411,7 +411,7 @@ static bool cli_config(struct client *cli, const json_t *cfg)
 
 bool cli_op_login(struct client *cli, const json_t *obj, unsigned int msgsz)
 {
-	char user[33];
+	char user[MAX_USERNAME];
 	char *pass;
 	json_t *cfg, *resobj, *res_cfgobj;
 	int version, err_code = BC_ERR_INTERNAL;

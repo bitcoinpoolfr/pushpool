@@ -613,8 +613,8 @@ static bool valid_auth_hdr(const char *hdr, char *username_out)
 		goto out;
 
 	rc = true;
-	strncpy(username_out, user, 64);
-	username_out[64] = 0;
+	strncpy(username_out, user, MAX_USERNAME);
+	username_out[MAX_USERNAME] = 0;
 
 out:
 	free(pass_db);
@@ -705,7 +705,7 @@ static void http_handle_req(struct evhttp_request *req, bool longpoll)
 {
 	const char *clen_str, *auth;
 	char *body_str;
-	char username[65] = "";
+	char username[MAX_USERNAME] = "";
 	void *body, *reply = NULL;
 	int clen = 0;
 	unsigned int reply_len = 0;
@@ -812,7 +812,7 @@ static void __http_srv_event(struct evhttp_request *req, void *arg,
 {
 	struct server_socket *sock = arg;
 	const char *auth;
-	char username[65] = "";
+	char username[MAX_USERNAME] = "";
 
 	/* copy X-Forwarded-For header to remote_host, if a trusted proxy provides it */
 	if (sock->cfg->proxy && !strcmp(req->remote_host, sock->cfg->proxy)) {

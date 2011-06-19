@@ -52,6 +52,7 @@ typedef memcached_return memcached_return_t;
 #else
 #define JSON_LOADS(str, err_ptr) json_loads((str), (err_ptr))
 #endif
+#define MAX_USERNAME 80
 
 struct hist;
 
@@ -66,7 +67,7 @@ struct client {
 	struct tcp_read_state	rst;
 
 	bool			logged_in;
-	char			auth_user[33];	/* authenticated username */
+	char			auth_user[MAX_USERNAME+1];	/* authenticated username */
 
 	struct ubbp_header	ubbp;
 
